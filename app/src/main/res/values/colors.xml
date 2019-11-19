@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#ffd503</color>
+    <color name="colorPrimaryDark">#ffd503</color>
+    <color name="colorAccent">#ffd503</color>
+
+    <color name="appColor">#ffd503</color>
+
+    <color name="white">#ffffff</color>
+
+
+    <color name="black">#000000</color>
+
+   <color name="green">#FF235E24</color>
+
+    <color name="red">#FFF44336</color>
+
+</resources>
+

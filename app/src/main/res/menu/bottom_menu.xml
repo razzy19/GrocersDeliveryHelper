@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:id="@+id/menu_pending"
+        android:icon="@drawable/ic_schedule_white"
+        android:title="Pending"
+
+        />
+    <item
+        android:id="@+id/menu_completed"
+        android:icon="@drawable/ic_done_all_white"
+        android:title="Completed"
+
+        />
+
+
+</menu>
