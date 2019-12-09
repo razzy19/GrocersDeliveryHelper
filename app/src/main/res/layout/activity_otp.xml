@@ -7,7 +7,6 @@
     tools:context=".Views.Login">
 
 
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="0dp"
@@ -15,6 +14,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="140dp"
         android:layout_marginEnd="16dp"
+        android:fontFamily="@font/muli"
         android:text="ग्रोसर"
         android:textColor="@color/black"
         android:textSize="38sp"
@@ -30,6 +30,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
+        android:fontFamily="@font/muli"
         android:text="संपर्क क्रमांक प्रविष्ट करा"
         android:textColor="@color/black"
         android:textSize="42sp"
@@ -47,6 +48,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:drawableEnd="@drawable/ic_verified_user_black_24dp"
+        android:fontFamily="@font/muli"
         android:hint="संपर्क क्रमांक"
         android:inputType="text"
         android:letterSpacing="0.1"
@@ -66,6 +68,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
+        android:fontFamily="@font/muli"
         android:text="पुढे जा"
         android:textColor="@color/black"
         android:textSize="38sp"
@@ -93,6 +96,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
+        android:visibility="invisible"
         app:SpinKit_Color="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

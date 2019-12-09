@@ -53,13 +53,21 @@ public class PendingOrdersResponse {
         @SerializedName("scheduled_delivery_date")
         String date;
 
+        @SerializedName("scheduled_delivery_time")
+        String time;
+
         @SerializedName("total")
         int total;
+
+        @SerializedName("delivery_address")
+        String address;
 
         @SerializedName("orders")
         ArrayList<PendingOrdersResponse.PendingOrder.Orders> orders;
 
-        public PendingOrder(int id, String contact, String fullname, String status, String payment_mode, String date, int total, ArrayList<Orders> orders) {
+        public PendingOrder(int id,String time,String address, String contact, String fullname, String status, String payment_mode, String date, int total, ArrayList<Orders> orders) {
+           this.address=address;
+           this.time=time;
             this.id = id;
             this.contact = contact;
             this.fullname = fullname;
@@ -68,6 +76,22 @@ public class PendingOrdersResponse {
             this.date = date;
             this.total = total;
             this.orders = orders;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
+
+        public String getTime() {
+            return time;
+        }
+
+        public void setTime(String time) {
+            this.time = time;
         }
 
         public int getId() {

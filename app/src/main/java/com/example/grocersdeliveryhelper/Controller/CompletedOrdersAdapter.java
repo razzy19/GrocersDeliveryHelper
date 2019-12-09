@@ -45,9 +45,9 @@ public class CompletedOrdersAdapter extends RecyclerView.Adapter<CompletedOrders
         holder.txtdate.setText(completedOrdersModel.getDate());
         holder.txtName.setText(completedOrdersModel.getFullname());
         holder.txtPhone.setText(completedOrdersModel.getContact());
-        holder.txtAddress.setText("null");
-        holder.txtAmount.setText(completedOrdersModel.getTotal());
-        holder.txttime.setText(completedOrdersModel.getDate());
+        holder.txtAddress.setText(completedOrdersModel.getAddress());
+        holder.txtAmount.setText(completedOrdersModel.getTotal()+"");
+        holder.txttime.setText(completedOrdersModel.getTime());
 
 
         final boolean isExpanded = position==mExpandedPosition;
@@ -79,7 +79,7 @@ public class CompletedOrdersAdapter extends RecyclerView.Adapter<CompletedOrders
             super(itemView);
 
             txtorderid= itemView.findViewById(R.id.order_id);
-            txtdate= itemView.findViewById(R.id.date);
+            txtdate= itemView.findViewById(R.id.txt_date);
             txtName=itemView.findViewById(R.id.name);
             txtPhone=itemView.findViewById(R.id.phone);
             txtAmount=itemView.findViewById(R.id.amount);

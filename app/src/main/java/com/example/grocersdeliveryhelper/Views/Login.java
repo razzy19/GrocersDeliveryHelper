@@ -4,9 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Patterns;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -41,6 +44,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     private EditText editTextPassword;
     private TextView txtForgotPass;
     private ProgressBar progressBar;
+    Button btnproceed;
     SharedPrefManager sharedPrefManager;
 
     @Override
@@ -55,7 +59,28 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         Sprite doubleBounce = new DoubleBounce();
         progressBar.setIndeterminateDrawable(doubleBounce);
 //        findViewById(R.id.txtSignIn).setOnClickListener(this);
+
+        editTextPassword.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final int DRAWABLE_LEFT = 0;
+                final int DRAWABLE_TOP = 1;
+                final int DRAWABLE_RIGHT = 2;
+                final int DRAWABLE_BOTTOM = 3;
+
+                if(event.getAction() == MotionEvent.ACTION_UP) {
+                    if(event.getRawX() >= (editTextPassword.getRight() - editTextPassword.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        editTextPassword.setTransformationMethod(null) ;
+                        return true;
+                    }
+                }
+                editTextPassword.setTransformationMethod(new PasswordTransformationMethod());
+                return false;
+            }
+        });
+
         findViewById(R.id.txtForgotPass).setOnClickListener(this);
+        findViewById(R.id.btn_proceed).setOnClickListener(this);
         sharedPrefManager= new SharedPrefManager(Login.this);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         new Timer().scheduleAtFixedRate(new TimerTask() {
@@ -96,11 +121,11 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     protected void onStart() {
         super.onStart();
 
-        if (SharedPrefManager.getInstance(this).isLoggedIn()) {
-            Intent intent = new Intent(this, Home.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-        }
+//        if (SharedPrefManager.getInstance(this).isLoggedIn()) {
+//            Intent intent = new Intent(this, Home.class);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//            startActivity(intent);
+//        }
     }
 
     private void userLogin(){
@@ -114,11 +139,11 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             return;
         }
 
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            editTextName.setError("Enter a valid email");
-            editTextName.requestFocus();
-            return;
-        }
+//        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+//            editTextName.setError("Enter a valid email");
+//            editTextName.requestFocus();
+//            return;
+//        }
 
         if (password.isEmpty()) {
             editTextPassword.setError("Password required");
@@ -193,8 +218,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.txtSignIn:
-                startActivity(new Intent(this, SignUp.class));
+            case R.id.btn_proceed:
+                userLogin();
                 break;
             case R.id.txtForgotPass:
                 startActivity(new Intent(this,OTP.class));

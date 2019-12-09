@@ -43,11 +43,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
     @Override
     protected void onStart() {
         super.onStart();
-        if(SharedPrefManager.getInstance(this).isLoggedIn()){
-            Intent intent = new Intent(this, Home.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-        }
+
     }
 
     private void userSignUp() {

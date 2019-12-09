@@ -145,11 +145,11 @@ public class SharedPrefManager {
     }
 
 
-    public boolean isLoggedIn() {
+    public String isLoggedIn() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        return sharedPreferences.getInt("id", -1) != -1;
+        String token = sharedPreferences.getString("token", null) ;
+        return  token;
     }
-
 
 
     public void clear() {

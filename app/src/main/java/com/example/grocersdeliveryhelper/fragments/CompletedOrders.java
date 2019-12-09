@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,8 +20,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.baoyz.widget.PullRefreshLayout;
 import com.example.grocersdeliveryhelper.Controller.CompletedOrdersAdapter;
 import com.example.grocersdeliveryhelper.Model.CompletedOrdersModel;
 import com.example.grocersdeliveryhelper.R;
@@ -38,10 +41,12 @@ public class CompletedOrders extends Fragment {
     RecyclerView recyclerView;
     ArrayList<CompletedOrdersModel> completedOrdersList;
     CompletedOrdersAdapter completedOrdersAdapter;
-    SwipeRefreshLayout swipeRefreshLayout;
+    PullRefreshLayout swipeRefreshLayout;
     Context context;
     SharedPrefManager sharedPrefManager;
     private String decryptedToken;
+    ConstraintLayout layout;
+    private TextView txtOrderCount;
 
     @Nullable
     @Override
@@ -52,24 +57,29 @@ public class CompletedOrders extends Fragment {
     @Override
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        completedOrders(view);
 
-            completedOrders(view);
-            swipeRefreshLayout=view.findViewById(R.id.swipe_refresh);
-           swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-               @Override
-               public void onRefresh() {
-                   swipeRefreshLayout.setRefreshing(false);
-                   completedOrders(view);
-               }
-           });
+        // listen refresh event
+         swipeRefreshLayout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                completedOrders(view);
+
+            }
+        });
+// refresh complete
+
     }
     private void completedOrders(View view){
 
         sharedPrefManager = new SharedPrefManager(this.getActivity());
         decryptedToken = sharedPrefManager.getToken();
-
+        swipeRefreshLayout=view.findViewById(R.id.swipe_refresh);
+        layout=view.findViewById(R.id.layout_nodata);
         recyclerView = view.findViewById(R.id.recycle_completed_orders);
+        txtOrderCount=view.findViewById(R.id.txt_order_count);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+//        swipeRefreshLayout.setRefreshing(true);
 
         Retrofit retrofitClient = new RetrofitClient().getRetrofit();
         final Api api = retrofitClient.create(Api.class);
@@ -79,12 +89,28 @@ public class CompletedOrders extends Fragment {
             @Override
             public void onResponse(Call<CompletedOrdersResponse> call, Response<CompletedOrdersResponse> response) {
                 CompletedOrdersResponse completedOrdersResponse= response.body();
+                ArrayList<CompletedOrdersResponse.CompletedOrder> completedOrders =completedOrdersResponse.getCompletedOrders();
 
                 if (completedOrdersResponse.getState().equals("success")) {
                     Log.d("historydetails", completedOrdersResponse.getState());
 
+//                    for(CompletedOrdersResponse.CompletedOrder c: completedOrders){
+                        completedOrdersAdapter =new CompletedOrdersAdapter(getActivity(),completedOrdersResponse.getCompletedOrders());
+                        txtOrderCount.setText(String.valueOf(completedOrdersAdapter.getItemCount()));
+                        if(completedOrdersAdapter.getItemCount()==0)
+                        {
+                            recyclerView.setVisibility(View.INVISIBLE);
+                            layout.setVisibility(View.VISIBLE);
+                        }
+                        recyclerView.setAdapter(completedOrdersAdapter);
+                    swipeRefreshLayout.setRefreshing(false);
+
+
+//                    }
+
                 } else {
                     Log.d("historydetails", completedOrdersResponse.getState());
+//                    swipeRefreshLayout.setRefreshing(false);
                 }
             }
 

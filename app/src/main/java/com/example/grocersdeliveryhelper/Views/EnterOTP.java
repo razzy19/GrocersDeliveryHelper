@@ -19,5 +19,7 @@ public class EnterOTP extends AppCompatActivity {
         progressBar = findViewById(R.id.spin_kit);
         Sprite doubleBounce = new DoubleBounce();
         progressBar.setIndeterminateDrawable(doubleBounce);
+
+
     }
 }

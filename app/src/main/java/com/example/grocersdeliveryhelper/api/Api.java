@@ -9,6 +9,7 @@ import com.example.grocersdeliveryhelper.Model.LoginResponse;
 import com.example.grocersdeliveryhelper.Model.StatusModel;
 import com.example.grocersdeliveryhelper.Model.UsersResponse;
 import com.example.grocersdeliveryhelper.Response.CompletedOrdersResponse;
+import com.example.grocersdeliveryhelper.Response.OrderDeliveredResponse;
 import com.example.grocersdeliveryhelper.Response.PendingOrdersResponse;
 
 import java.util.List;
@@ -37,9 +38,9 @@ public interface Api {
     );
 
     @FormUrlEncoded
-    @POST("userlogin")
+    @POST("delivery_agents/login/")
     Call<LoginResponse> userLogin(
-            @Field("phone") String email,
+            @Field("contact") String email,
             @Field("password") String password
     );
 
@@ -57,11 +58,10 @@ public interface Api {
     );
 
     @FormUrlEncoded
-    @PUT("updatepassword")
+    @POST("delivery_agents/change_pwd/")
     Call<DefaultResponse> updatePassword(
-            @Field("currentpassword") String currentpassword,
-            @Field("newpassword") String newpassword,
-            @Field("name") String name
+            @Field("contact") String contact,
+            @Field("password") String password
     );
 
     @DELETE("deleteuser/{id}")
@@ -70,6 +70,11 @@ public interface Api {
     @FormUrlEncoded
     @POST("orders/get_completed_orders/")
     Call<CompletedOrdersResponse> getCompletedOrders(@Header("Authorization") String token, @Field("status") String status);
+
+    @FormUrlEncoded
+    @POST("orders/finish_order/")
+    Call<OrderDeliveredResponse> completeOrder(@Header("Authorization") String token, @Field("orderid") int id,@Field("otp") String otp);
+
 
     @FormUrlEncoded
     @POST("orders/get_pending_orders/")

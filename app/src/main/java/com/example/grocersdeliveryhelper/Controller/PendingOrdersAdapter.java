@@ -45,13 +45,13 @@ public class PendingOrdersAdapter extends RecyclerView.Adapter<PendingOrdersAdap
     public void onBindViewHolder(@NonNull final PendingOrdersAdapter.PendingOrdersViewHolder holder, final int position) {
         final PendingOrdersResponse.PendingOrder pendingOrdersModel=completedOrdersList.get(position);
 
-        holder.txtorderid.setText("Order ID:"+pendingOrdersModel.getId());
-        holder.txtdate.setText(pendingOrdersModel.getDate());
+        holder.txtorderid.setText(pendingOrdersModel.getId()+"");
+        holder.txtdate.setText(pendingOrdersModel.getDate()+"");
         holder.txtName.setText(pendingOrdersModel.getFullname());
         holder.txtPhone.setText(pendingOrdersModel.getContact());
-        holder.txtAddress.setText("null");
-        holder.txtAmount.setText(pendingOrdersModel.getTotal());
-
+        holder.txtAddress.setText(pendingOrdersModel.getAddress());
+        holder.txtAmount.setText(pendingOrdersModel.getTotal()+"");
+        holder.txttime.setText(pendingOrdersModel.getTime());
 
         final boolean isExpanded = position==mExpandedPosition;
         holder.subItem.setVisibility(isExpanded?View.VISIBLE:View.GONE);
@@ -73,6 +73,7 @@ public class PendingOrdersAdapter extends RecyclerView.Adapter<PendingOrdersAdap
               Intent intent=new Intent(mcontext, UpdateStatus.class);
               intent.putExtra("orderid",holder.txtorderid.getText());
                 intent.putExtra("custname",holder.txtName.getText());
+
                 mcontext.startActivity(intent);
 
             }
@@ -100,7 +101,7 @@ public class PendingOrdersAdapter extends RecyclerView.Adapter<PendingOrdersAdap
             super(itemView);
 
             txtorderid= itemView.findViewById(R.id.order_id);
-            txtdate= itemView.findViewById(R.id.date);
+            txtdate= itemView.findViewById(R.id.txt_date);
             txtName=itemView.findViewById(R.id.name);
             btnupdate=itemView.findViewById(R.id.btn_update);
             txtPhone=itemView.findViewById(R.id.phone);

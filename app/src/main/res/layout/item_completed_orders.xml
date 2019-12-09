@@ -20,36 +20,38 @@
         android:orientation="vertical">
 
 
-
         <TextView
             android:id="@+id/order_id"
             android:layout_width="match_parent"
 
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            android:fontFamily="@font/muli"
             android:text=" "
             android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
 
         <TextView
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/muli"
             android:gravity="end"
             android:text="Sam Williams"
             android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            android:fontFamily="@font/muli"
             android:gravity="end"
             android:text="9876123450"
             android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
         <LinearLayout
             android:layout_height="wrap_content"
@@ -76,9 +78,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:fontFamily="@font/muli"
                     android:text="Bavdhan,Pune"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -90,19 +93,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:fontFamily="@font/muli"
                     android:text="Amount:"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/amount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:fontFamily="@font/muli"
                     android:gravity="start"
                     android:text="4200 Rs."
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -114,19 +119,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:fontFamily="@font/muli"
                     android:text="Estimated Delivery Date:"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/date"
+                    android:id="@+id/txt_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:fontFamily="@font/muli"
                     android:gravity="start"
                     android:text="20/08/19"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -138,19 +145,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:fontFamily="@font/muli"
                     android:text="Estimated Delivery Time:"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/txt_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:fontFamily="@font/muli"
                     android:gravity="start"
                     android:text="8:30"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
 

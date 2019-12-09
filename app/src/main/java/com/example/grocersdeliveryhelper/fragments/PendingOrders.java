@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.baoyz.widget.PullRefreshLayout;
 import com.example.grocersdeliveryhelper.Controller.CompletedOrdersAdapter;
 import com.example.grocersdeliveryhelper.Controller.PendingOrdersAdapter;
 import com.example.grocersdeliveryhelper.Model.CompletedOrdersModel;
@@ -42,9 +44,9 @@ public class PendingOrders extends Fragment {
     RecyclerView recyclerView;
     ArrayList<CompletedOrdersModel> completedOrdersList=new ArrayList<>();
     PendingOrdersAdapter pendingOrdersAdapter;
-    SwipeRefreshLayout swipeRefreshLayout;
+    PullRefreshLayout swipeRefreshLayout;
     Context context;
-
+    ConstraintLayout layout;
     SharedPrefManager sharedPrefManager;
     private String decryptedToken;
 
@@ -53,13 +55,27 @@ public class PendingOrders extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_pending_orders, container, false);
 
+
     }
 
     @Override
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        swipeRefreshLayout=view.findViewById(R.id.swipe_refresh1);
         pendingOrders(view);
+//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                swipeRefreshLayout.setRefreshing(false);
+//            }
+//        });
+
+        swipeRefreshLayout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                pendingOrders(view);
+
+            }
+        });
     }
     private void pendingOrders(final View view){
 
@@ -78,15 +94,17 @@ public class PendingOrders extends Fragment {
 //                }, 3000);
 //            }
 //        });
-
+        layout=view.findViewById(R.id.layout_nodata);
 
         sharedPrefManager = new SharedPrefManager(this.getActivity());
         decryptedToken = sharedPrefManager.getToken();
 
         recyclerView = view.findViewById(R.id.recycle_pending_orders);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+        swipeRefreshLayout=view.findViewById(R.id.swipe_refresh);
 
 
+//        swipeRefreshLayout.setRefreshing(true);
         Retrofit retrofitClient = new RetrofitClient().getRetrofit();
         final Api api = retrofitClient.create(Api.class);
         Call<PendingOrdersResponse> call = api.getPendingOrders(decryptedToken,"pending");
@@ -97,9 +115,19 @@ public class PendingOrders extends Fragment {
                 PendingOrdersResponse pendingOrdersResponse = response.body();
 
                 if (pendingOrdersResponse.getState().equals("success")) {
+                    pendingOrdersAdapter =new  PendingOrdersAdapter(pendingOrdersResponse.getPendingOrders(),PendingOrders.this);
+                    recyclerView.setAdapter(pendingOrdersAdapter);
+                    if(pendingOrdersAdapter.getItemCount()==0)
+                    {
+                        layout.setVisibility(View.VISIBLE);
+                        recyclerView.setVisibility(View.INVISIBLE);
+                    }
+                    swipeRefreshLayout.setRefreshing(false);
+
                     Log.d("historydetails", pendingOrdersResponse.getState());
 
                 } else {
+//                    swipeRefreshLayout.setRefreshing(false);
                     Log.d("historydetails", pendingOrdersResponse.getState());
                 }
             }
@@ -107,7 +135,7 @@ public class PendingOrders extends Fragment {
             @Override
             public void onFailure(Call<PendingOrdersResponse> call, Throwable t) {
 
-                Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 

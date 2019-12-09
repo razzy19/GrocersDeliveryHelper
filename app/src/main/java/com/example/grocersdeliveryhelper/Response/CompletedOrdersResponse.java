@@ -56,11 +56,18 @@ public class CompletedOrdersResponse {
         @SerializedName("total")
         int total;
 
+        @SerializedName("scheduled_delivery_time")
+        String time;
+
+        @SerializedName("delivery_address")
+        String address;
+
         @SerializedName("orders")
         ArrayList<CompletedOrdersResponse.CompletedOrder.Orders> orders;
 
-        public CompletedOrder(int id, String contact, String fullname, String status, String payment_mode, String date, int total, ArrayList<CompletedOrdersResponse.CompletedOrder.Orders> orders) {
+        public CompletedOrder(int id,String time, String contact, String fullname, String status, String payment_mode, String date, int total,String address, ArrayList<CompletedOrdersResponse.CompletedOrder.Orders> orders) {
             this.id = id;
+            this.time= time;
             this.contact = contact;
             this.fullname = fullname;
             this.status = status;
@@ -68,6 +75,23 @@ public class CompletedOrdersResponse {
             this.date = date;
             this.total = total;
             this.orders = orders;
+            this.address = address;
+        }
+
+        public String getTime() {
+            return time;
+        }
+
+        public void setTime(String time) {
+            this.time = time;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
         }
 
         public int getId() {

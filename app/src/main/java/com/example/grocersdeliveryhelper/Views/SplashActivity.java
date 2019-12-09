@@ -6,27 +6,37 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.example.grocersdeliveryhelper.R;
+import com.example.grocersdeliveryhelper.storage.SharedPrefManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
+    SharedPrefManager sharedPrefManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
 
+        sharedPrefManager = new SharedPrefManager(SplashActivity.this);
 
         Handler handler=new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
 
-                    Intent intent = new Intent(SplashActivity.this, Home.class);
-                    startActivity(intent);
-                    finish();
-
+                if(sharedPrefManager.isLoggedIn()==null)
+                    {
+                        Intent intent = new Intent(SplashActivity.this, Login.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else{
+                        Intent intent = new Intent(SplashActivity.this, Home.class);
+                        startActivity(intent);
+                        finish();
+                    }
 
             }
 
